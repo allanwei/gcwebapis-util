@@ -91,3 +91,18 @@ func Strings(input []string) []string {
 	}
 	return u
 }
+
+//Subtract ...
+func Subtract(endtime, starttime string) (Duration *time.Duration, err error) {
+	s, err := time.Parse(starttime, starttime)
+	if err != nil {
+		return nil, err
+	}
+	e, err := time.Parse(endtime, endtime)
+	if err != nil {
+		return nil, err
+	}
+	d := e.Sub(s)
+	return &d, nil
+
+}
