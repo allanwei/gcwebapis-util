@@ -3,6 +3,7 @@ package util
 import (
 	"fmt"
 	"net/url"
+	"reflect"
 	"time"
 )
 
@@ -121,4 +122,23 @@ func TimeParseRFC3339(timestr string) (time.Time, error) {
 	}
 	return v1, nil
 
+}
+
+//StrutForScan ...
+func StrutForScan(u interface{}, columns []string) []interface{} {
+	val := reflect.ValueOf(u).Elem()
+	v := make([]interface{}, val.NumField())
+	typeOfT := val.Type()
+	for i := 0; i < len(columns); i++ {
+		for j := 0; j < val.NumField(); j++ {
+			valueField := val.Field(j)
+			name := typeOfT.Field(j).Name
+			if columns[i] == name {
+				v[i] = valueField.Addr().Interface()
+				break
+			}
+		}
+	}
+
+	return v
 }
