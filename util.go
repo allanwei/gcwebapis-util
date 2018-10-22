@@ -154,6 +154,6 @@ func TimeDurationToHHMMString(duration float64, unit string) (rect string) {
 	t, _ := TimeParseRFC3339(sdate)
 	a := t.Add(h)
 	so := a.Format(time.RFC3339)
-	rect = so[11:15]
+	rect = so[11:16]
 	return
 }
