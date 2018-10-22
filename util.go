@@ -142,3 +142,18 @@ func StrutForScan(u interface{}, columns []string) []interface{} {
 
 	return v
 }
+
+//TimeDurationToHHMMString ...
+func TimeDurationToHHMMString(duration float64, unit string) (rect string) {
+	s := fmt.Sprintf("%fm", duration)
+	h, err := time.ParseDuration(s)
+	if err != nil {
+		return
+	}
+	sdate := "2016-01-02T00:00:00Z"
+	t, _ := TimeParseRFC3339(sdate)
+	a := t.Add(h)
+	so := a.Format(time.RFC3339)
+	rect = so[11:15]
+	return
+}
