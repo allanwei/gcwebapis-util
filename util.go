@@ -94,15 +94,31 @@ func Strings(input []string) []string {
 
 //Subtract ...
 func Subtract(endtime, starttime string) (Duration *time.Duration, err error) {
-	s, err := time.Parse(starttime, starttime)
+	s, err := TimeParseRFC3339(starttime)
 	if err != nil {
 		return nil, err
 	}
-	e, err := time.Parse(endtime, endtime)
+	e, err := TimeParseRFC3339(endtime)
 	if err != nil {
 		return nil, err
 	}
 	d := e.Sub(s)
 	return &d, nil
+
+}
+
+//TimeParseRFC3339 ...
+func TimeParseRFC3339(timestr string) (time.Time, error) {
+	var ts string
+	if len(timestr) < 20 {
+		ts = fmt.Sprint(timestr + "Z")
+	} else {
+		ts = timestr
+	}
+	v1, err := time.Parse(time.RFC3339, ts)
+	if err != nil {
+		return time.Now(), err
+	}
+	return v1, nil
 
 }
