@@ -157,3 +157,35 @@ func TimeDurationToHHMMString(duration float64, unit string) (rect string) {
 	rect = so[11:16]
 	return
 }
+
+//TimeGetDate ...
+func TimeGetDate(t time.Time) time.Time {
+	s := t.Format("2006-01-02T00:00:00")
+	n, _ := TimeParseRFC3339(s)
+	return n
+}
+
+//SubstractTimeFromString ...
+func SubstractTimeFromString(end, start string) time.Duration {
+	endt, _ := TimeParseRFC3339(end)
+	stt, _ := TimeParseRFC3339(start)
+	d := endt.Sub(stt)
+	return d
+}
+
+//GetSQLTimeString ...
+func GetSQLTimeString(t time.Time) string {
+	out := t.Format(time.RFC3339)
+	o := out[0:19]
+	return o
+}
+
+//TimeStringGetDate ...
+func TimeStringGetDate(timestr string) *string {
+	v1, _ := TimeParseRFC3339(timestr)
+	s := v1.Format("2006-01-02T00:00:00")
+	s1, _ := TimeParseRFC3339(s)
+	out := GetSQLTimeString(s1)
+
+	return &out
+}
