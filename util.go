@@ -2,6 +2,7 @@ package util
 
 import (
 	"fmt"
+	"math"
 	"net/url"
 	"reflect"
 	"time"
@@ -110,9 +111,10 @@ func Subtract(endtime, starttime string) (Duration *time.Duration, err error) {
 
 //TimeParseRFC3339 ...
 func TimeParseRFC3339(timestr string) (time.Time, error) {
+	za := GetTimeZoneAttach()
 	var ts string
 	if len(timestr) < 20 {
-		ts = fmt.Sprint(timestr + "Z")
+		ts = fmt.Sprintf("%s%s", timestr, za)
 	} else {
 		ts = timestr
 	}
@@ -188,4 +190,18 @@ func TimeStringGetDate(timestr string) *string {
 	out := GetSQLTimeString(s1)
 
 	return &out
+}
+
+//GetTimeZoneAttach ...
+func GetTimeZoneAttach() string {
+	t := time.Now()
+	_, offset := t.Zone()
+	offcha := "-"
+	if offset > 0 {
+		offcha = "+"
+	}
+	oh := float64(offset / 3600)
+	hs := math.Abs(oh)
+	za := fmt.Sprintf("%s0%d:00", offcha, int(hs))
+	return za
 }
