@@ -1,2 +1,9 @@
 # gcwebapis-util
-Ground Cast Web apis test
+Try and learn some packages
+	"fmt"
+	"math"
+	"net/url"
+	"reflect"
+	"time"
+  
+
